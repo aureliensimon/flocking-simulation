@@ -1,23 +1,28 @@
 #include <iostream>
+#include <vector>
+#include <cstdlib>
+#include <ctime>
+#include <unistd.h>
 #include <SFML/Graphics.hpp>
 
+#include "../include/flock.h"
 #include "../include/boid.h"
 
 #define WIDTH 1500
 #define HEIGHT 750
+#define SIZE 10
 
 using namespace std;
 
 int main() {
 
-    Boid b = Boid(WIDTH / 2, HEIGHT / 2);
-    cout << b.getPositionX() << endl;
+    Flock f = Flock(40);
+    f.settlement();
 
-    sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), "Boids");
+    sf::ContextSettings settings;
+    settings.antialiasingLevel = 8;
+    sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), "Boids", sf::Style::Default, settings);
     window.setFramerateLimit(60);
-
-    sf::CircleShape shape(5);
-    shape.setFillColor(sf::Color::Green);
 
     while (window.isOpen()) {
 
@@ -27,9 +32,13 @@ int main() {
         }
 
         window.clear();
-        b.update();
-        shape.setPosition(b.getPositionX(), b.getPositionY());
-        window.draw(shape);
+        f.update();
+        for (Boid & boid : f.getBoids()) {
+            sf::CircleShape shape(SIZE, 3);
+            shape.setFillColor(sf::Color(boid.getColorR(), boid.getColorG(), boid.getColorB(), 255));
+            shape.setPosition(boid.getPositionX(), boid.getPositionY());
+            window.draw(shape);
+        }
         window.display();
     }
 
