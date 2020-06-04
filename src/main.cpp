@@ -2,7 +2,6 @@
 #include <time.h>
 #include <SFML/Graphics.hpp>
 
-#include "../include/pvector.h"
 #include "../include/flock.h"
 #include "../include/boid.h"
 
@@ -16,7 +15,7 @@ int main() {
 
     srand (time(NULL));
 
-    Flock f = Flock(1);
+    Flock f = Flock(100);
     f.settlement();
 
     sf::ContextSettings settings;

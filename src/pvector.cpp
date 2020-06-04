@@ -1,6 +1,6 @@
 #include "../include/pvector.h"
 
-void PVector::set (double x, double y, double z = 0.f) {
+void PVector::set (double x, double y, double z) {
     this->x = x;
     this->y = y;
     this->z = z;
@@ -64,7 +64,9 @@ void PVector::setMagnitude (double newMagnitude) {
 }
 
 void PVector::normalize () {
-    this->set(this->x / this->getMagnitude(), this->y / this->getMagnitude(), this->z / this->getMagnitude());
+    double m = this->getMagnitude();
+
+    this->set(this->x / m, this->y / m, this->z / m);
 }
 
 

@@ -8,6 +8,7 @@ using namespace std;
 
 class PVector {
     public :
+        PVector() {}
         PVector(double xinit, double yinit, double zinit = 0.f) : x(xinit), y(yinit), z(zinit) {}
         ~PVector() {}
 
@@ -17,7 +18,7 @@ class PVector {
         double getZ() const { return z; }
         
         // Setters
-        void set(double, double, double);
+        void set(double, double, double = 0.f);
 
         // Operations
         void add(PVector);
