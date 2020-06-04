@@ -4,6 +4,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <cmath>
+#include <vector>
 #include <SFML/Graphics.hpp>
 
 #include "../include/pvector.h"
@@ -45,7 +46,9 @@ class Boid {
         PVector velocity;
         PVector acceleration;
         
+        int fov = 100;
         int max_speed = 2;
+        int max_force = 10;
         Rgb color;
 };
 
