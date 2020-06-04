@@ -38,6 +38,7 @@ class Boid {
 
         void update();
         void show(sf::RenderWindow *);
+        void edges();
 
     protected:
         PVector position;
