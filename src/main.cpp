@@ -1,10 +1,8 @@
 #include <iostream>
-#include <vector>
-#include <cstdlib>
-#include <ctime>
-#include <unistd.h>
+#include <time.h>
 #include <SFML/Graphics.hpp>
 
+#include "../include/pvector.h"
 #include "../include/flock.h"
 #include "../include/boid.h"
 
@@ -16,7 +14,9 @@ using namespace std;
 
 int main() {
 
-    Flock f = Flock(40);
+    srand (time(NULL));
+
+    Flock f = Flock(1);
     f.settlement();
 
     sf::ContextSettings settings;
@@ -34,10 +34,7 @@ int main() {
         window.clear();
         f.update();
         for (Boid & boid : f.getBoids()) {
-            sf::CircleShape shape(SIZE, 3);
-            shape.setFillColor(sf::Color(boid.getColorR(), boid.getColorG(), boid.getColorB(), 255));
-            shape.setPosition(boid.getPositionX(), boid.getPositionY());
-            window.draw(shape);
+            boid.show(&window);
         }
         window.display();
     }

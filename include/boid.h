@@ -2,6 +2,9 @@
 #define BOID_H
 
 #include <iostream>
+#include <stdlib.h>
+#include <cmath>
+#include <SFML/Graphics.hpp>
 
 using namespace std;
 
@@ -21,10 +24,10 @@ class Boid {
         Boid(int xinit = 0, int yinit = 0) {
             position.x = xinit;
             position.y = yinit;
-            velocity.x = 1;
-            velocity.y = 0.75;
-            acceleration.x = 0;
-            acceleration.y = 0;
+            velocity.x = fmod(rand(), 1) - 0.5;
+            velocity.y = fmod(rand(), 1) - 0.5;
+            acceleration.x = fmod(rand(), 1) - 0.5;
+            acceleration.y = fmod(rand(), 1) - 0.5;
 
             color.r = rand() % 255;
             color.g = rand() % 255;
@@ -39,7 +42,9 @@ class Boid {
         int getColorB() const { return color.b; }
 
         void update();
-    
+        void show(sf::RenderWindow *);
+        void edges();
+
     protected:
         Vect position;
         Vect velocity;

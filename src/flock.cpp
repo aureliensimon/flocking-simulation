@@ -2,7 +2,7 @@
 
 void Flock::settlement() {
     for (int i = 0; i < numberBoids; ++i) {
-        boids.push_back(Boid(rand() % 1500, rand() % 750));
+        boids.push_back(Boid(1500/2, 750/2));
     }
 }
 
