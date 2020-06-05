@@ -7,7 +7,8 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 
-#include "../include/pvector.h"
+#include "flock.h"
+#include "pvector.h"
 
 #define WIDTH 1500
 #define HEIGHT 750
@@ -20,9 +21,11 @@ typedef struct {
     int b;
 } Rgb;
 
+class Flock;
+
 class Boid {
     public :
-        Boid(int xinit = 0, int yinit = 0) {
+        Boid(Flock * finit, int xinit = 0, int yinit = 0) {
             position.set(WIDTH/2.f, HEIGHT/2.f);
             velocity.set(static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/max_speed)) - max_speed/2, static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/max_speed)) - max_speed/2);
             acceleration.set(0, 0);
@@ -30,6 +33,8 @@ class Boid {
             color.r = rand() % 255;
             color.g = rand() % 255;
             color.b = rand() % 255;
+
+            flock = finit;
         }
         ~Boid() {}
 
@@ -40,6 +45,7 @@ class Boid {
         void update();
         void show(sf::RenderWindow *);
         void edges();
+        vector<Boid> getNeighbours();
 
     protected:
         PVector position;
@@ -50,6 +56,7 @@ class Boid {
         int max_speed = 2;
         int max_force = 10;
         Rgb color;
+        Flock * flock;
 };
 
 #endif

@@ -6,7 +6,11 @@
 #include <cstdlib>
 #include <ctime>
 #include <unistd.h>
-#include "../include/boid.h"
+#include "boid.h"
+
+using namespace std;
+
+class Boid;
 
 class Flock {
     public :
@@ -15,7 +19,8 @@ class Flock {
 
         void settlement();
         void update();
-        vector<Boid> getBoids () const { return boids; };
+        vector<Boid> getBoids () const { return boids; }
+        int getNumberBoids () const { return numberBoids; }
     protected :
         int numberBoids;
         vector<Boid> boids;

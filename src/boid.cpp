@@ -4,6 +4,7 @@ void Boid::update () {
     position.add(velocity);
     velocity.add(acceleration);
     edges();
+    getNeighbours();
 }
 
 void Boid::show (sf::RenderWindow * window) {
@@ -24,4 +25,14 @@ void Boid::edges () {
     } else if (position.getY() > HEIGHT) {
         position.set(position.getX(), 0, position.getZ());
     }
+}
+
+vector<Boid> Boid::getNeighbours () {
+    vector<Boid> neighbours;
+    
+    for (Boid & boid : flock->getBoids()) {
+        if (!this->position.compare(boid.position) && this->position.dist(boid.position) < this->fov) neighbours.push_back(boid);
+    }
+
+    return neighbours;
 }

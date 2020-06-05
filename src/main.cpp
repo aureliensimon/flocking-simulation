@@ -3,7 +3,6 @@
 #include <SFML/Graphics.hpp>
 
 #include "../include/flock.h"
-#include "../include/boid.h"
 
 #define WIDTH 1500
 #define HEIGHT 750
@@ -15,7 +14,7 @@ int main() {
 
     srand (time(NULL));
 
-    Flock f = Flock(100);
+    Flock f = Flock(2);
     f.settlement();
 
     sf::ContextSettings settings;

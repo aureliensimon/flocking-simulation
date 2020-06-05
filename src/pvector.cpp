@@ -69,5 +69,17 @@ void PVector::normalize () {
     this->set(this->x / m, this->y / m, this->z / m);
 }
 
+double PVector::dist (PVector vector) {
+    double dx = this->x - vector.x;
+    double dy = this->y - vector.y;
+    double dz = this->z - vector.z;
+
+    return sqrt(pow(dx, 2) + pow(dy, 2) + pow(dz, 2));
+}
+
+int PVector::compare (PVector vector) {
+    return (this->x == vector.x && this->y == vector.y && this->z == vector.z);
+}
+
 
 

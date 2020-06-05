@@ -29,6 +29,8 @@ class PVector {
         void subScalar(double);
         void mulScalar(double);
         void divScalar(double);
+        double dist(PVector);
+        int compare(PVector);
 
         // Magnitude
         double getMagnitude();
