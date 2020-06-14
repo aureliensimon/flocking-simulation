@@ -3,10 +3,13 @@
 void Boid::update () {
     position.add(velocity);
     velocity.add(acceleration);
+    velocity.limit(max_speed);
+    this->acceleration.set(0, 0, 0);
     edges();
 
     vector<Boid> neighbours = getNeighbours();
     align(neighbours);
+    cohesion(neighbours);
 }
 
 void Boid::show (sf::RenderWindow * window) {
@@ -59,6 +62,24 @@ void Boid::align (vector<Boid> neighbours) {
         steerDirection.sub(this->velocity);
         steerDirection.limit(max_force);
 
-        this->acceleration.set(steerDirection.getX(), steerDirection.getY(), steerDirection.getZ());
+        this->acceleration.add(steerDirection);
+    }
+}
+
+void Boid::cohesion (vector<Boid> neighbours) {
+    PVector steerPosition;
+    
+    for (Boid & boid : neighbours) {
+        steerPosition.add(boid.position);
+    }
+    
+    if (neighbours.size() > 0) {
+        steerPosition.divScalar(neighbours.size());
+        steerPosition.sub(this->position);
+        steerPosition.setMagnitude(max_speed);
+        steerPosition.sub(this->velocity);
+        steerPosition.limit(max_force);
+
+        this->acceleration.add(steerPosition);
     }
 }

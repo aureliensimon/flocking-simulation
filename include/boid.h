@@ -51,13 +51,14 @@ class Boid {
         vector<Boid> getNeighbours();
 
         void align(vector<Boid>);
+        void cohesion(vector<Boid>);
 
     protected:
         PVector position;
         PVector velocity;
         PVector acceleration;
         
-        int fov = 45;
+        int fov = 100;
         int max_speed = 5;
         double max_force = 0.05;
         Rgb color;
