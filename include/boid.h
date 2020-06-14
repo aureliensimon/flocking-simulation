@@ -10,8 +10,8 @@
 #include "flock.h"
 #include "pvector.h"
 
-#define WIDTH 1500
-#define HEIGHT 750
+#define WIDTH 600
+#define HEIGHT 600
 
 using namespace std;
 
@@ -26,7 +26,7 @@ class Flock;
 class Boid {
     public :
         Boid(Flock * finit, int xinit = 0, int yinit = 0) {
-            position.set(WIDTH/2.f, HEIGHT/2.f);
+            position.set(rand() % WIDTH/2, rand() % HEIGHT/2);
             velocity.set(static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/max_speed)) - max_speed/2, static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/max_speed)) - max_speed/2);
             acceleration.set(0, 0);
 
@@ -42,19 +42,24 @@ class Boid {
         int getColorG() const { return color.g; }
         int getColorB() const { return color.b; }
 
+        PVector getPosition () const { return position; }
+
         void update();
         void show(sf::RenderWindow *);
+        void showFov(sf::RenderWindow *);
         void edges();
         vector<Boid> getNeighbours();
+
+        void align(vector<Boid>);
 
     protected:
         PVector position;
         PVector velocity;
         PVector acceleration;
         
-        int fov = 100;
-        int max_speed = 2;
-        int max_force = 10;
+        int fov = 45;
+        int max_speed = 5;
+        double max_force = 0.05;
         Rgb color;
         Flock * flock;
 };

@@ -8,7 +8,7 @@ using namespace std;
 
 class PVector {
     public :
-        PVector() {}
+        PVector() : x(0.f), y(0.f), z(0.f) {}
         PVector(double xinit, double yinit, double zinit = 0.f) : x(xinit), y(yinit), z(zinit) {}
         ~PVector() {}
 
@@ -29,6 +29,7 @@ class PVector {
         void subScalar(double);
         void mulScalar(double);
         void divScalar(double);
+        void limit(double);
         double dist(PVector);
         int compare(PVector);
 

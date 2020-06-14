@@ -4,8 +4,8 @@
 
 #include "../include/flock.h"
 
-#define WIDTH 1500
-#define HEIGHT 750
+#define WIDTH 600
+#define HEIGHT 600
 #define SIZE 10
 
 using namespace std;
@@ -14,7 +14,7 @@ int main() {
 
     srand (time(NULL));
 
-    Flock f = Flock(2);
+    Flock f = Flock(50);
     f.settlement();
 
     sf::ContextSettings settings;
@@ -31,9 +31,7 @@ int main() {
 
         window.clear();
         f.update();
-        for (Boid & boid : f.getBoids()) {
-            boid.show(&window);
-        }
+        f.show(&window);
         window.display();
     }
 

@@ -19,6 +19,7 @@ class Flock {
 
         void settlement();
         void update();
+        void show(sf::RenderWindow *);
         vector<Boid> getBoids () const { return boids; }
         int getNumberBoids () const { return numberBoids; }
     protected :

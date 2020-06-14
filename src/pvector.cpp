@@ -54,6 +54,10 @@ void PVector::divScalar (double scalar) {
     this->z /= scalar;
 }
 
+void PVector::limit (double limit) {
+    if (this->getMagnitude() > limit) this->setMagnitude(limit);
+} 
+
 double PVector::getMagnitude () {
     return sqrt(pow(this->x, 2) + pow(this->y, 2) + pow(this->z, 2));
 }

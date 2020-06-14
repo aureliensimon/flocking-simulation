@@ -11,3 +11,10 @@ void Flock::update() {
         boid.update();
     }
 }
+
+void Flock::show (sf::RenderWindow * window) {
+    for (Boid & boid : getBoids()) {
+        //boid.showFov(window);
+        boid.show(window);
+    }
+}

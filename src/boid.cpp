@@ -4,14 +4,23 @@ void Boid::update () {
     position.add(velocity);
     velocity.add(acceleration);
     edges();
-    getNeighbours();
+
+    vector<Boid> neighbours = getNeighbours();
+    align(neighbours);
 }
 
 void Boid::show (sf::RenderWindow * window) {
-    sf::CircleShape shape(10, 3);
-    shape.setFillColor(sf::Color(getColorR(), getColorG(), getColorB(), 255));
-    shape.setPosition(position.getX(), position.getY());
-    window->draw(shape);
+    sf::CircleShape body(10, 3);
+    body.setFillColor(sf::Color(getColorR(), getColorG(), getColorB(), 255));
+    body.setPosition(position.getX(), position.getY());
+    window->draw(body);
+}
+
+void Boid::showFov (sf::RenderWindow * window) {
+    sf::CircleShape vision(fov);
+    vision.setFillColor(sf::Color(50, 50, 50, 100));
+    vision.setPosition(position.getX() - fov + 10, position.getY() - fov + 10);
+    window->draw(vision);
 }
 
 void Boid::edges () {
@@ -35,4 +44,21 @@ vector<Boid> Boid::getNeighbours () {
     }
 
     return neighbours;
+}
+
+void Boid::align (vector<Boid> neighbours) {
+    PVector steerDirection;
+    
+    for (Boid & boid : neighbours) {
+        steerDirection.add(boid.velocity);
+    }
+    
+    if (neighbours.size() > 0) {
+        steerDirection.divScalar(neighbours.size());
+        steerDirection.setMagnitude(max_speed);
+        steerDirection.sub(this->velocity);
+        steerDirection.limit(max_force);
+
+        this->acceleration.set(steerDirection.getX(), steerDirection.getY(), steerDirection.getZ());
+    }
 }
