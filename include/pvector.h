@@ -30,6 +30,7 @@ class PVector {
         void mulScalar(double);
         void divScalar(double);
         void limit(double);
+        static PVector diff(PVector, PVector);
         double dist(PVector);
         int compare(PVector);
 

@@ -10,6 +10,7 @@ void Boid::update () {
     vector<Boid> neighbours = getNeighbours();
     align(neighbours);
     cohesion(neighbours);
+    separation(neighbours);
 }
 
 void Boid::show (sf::RenderWindow * window) {
@@ -61,9 +62,9 @@ void Boid::align (vector<Boid> neighbours) {
         perceivedVelocity.setMagnitude(max_speed);
         perceivedVelocity.sub(this->velocity);
         perceivedVelocity.limit(max_force);
-
-        this->acceleration.add(perceivedVelocity);
     }
+
+    this->acceleration.add(perceivedVelocity);
 }
 
 void Boid::cohesion (vector<Boid> neighbours) {
@@ -79,7 +80,26 @@ void Boid::cohesion (vector<Boid> neighbours) {
         perceivedCentre.setMagnitude(max_speed);
         perceivedCentre.sub(this->velocity);
         perceivedCentre.limit(max_force);
-
-        this->acceleration.add(perceivedCentre);
     }
+
+    this->acceleration.add(perceivedCentre);
+}
+
+void Boid::separation (vector<Boid> neighbours) {
+    PVector perceivedDistance;
+    
+    for (Boid & boid : neighbours) {
+        PVector distanceDifference = PVector::diff(this->position, boid.position);
+        distanceDifference.divScalar(pow(this->position.dist(boid.position), 2));
+        perceivedDistance.add(distanceDifference);
+    }
+
+    if (neighbours.size() > 0) {
+        perceivedDistance.divScalar(neighbours.size());
+        perceivedDistance.setMagnitude(max_speed);
+        perceivedDistance.sub(this->velocity);
+        perceivedDistance.limit(max_force);
+    }
+
+    this->acceleration.add(perceivedDistance);
 }

@@ -54,6 +54,10 @@ void PVector::divScalar (double scalar) {
     this->z /= scalar;
 }
 
+PVector PVector::diff (PVector vector1, PVector vector2) {
+    return PVector(vector1.getX() - vector2.getX(), vector1.getY() - vector2.getY(), vector1.getZ() - vector2.getZ());
+}
+
 void PVector::limit (double limit) {
     if (this->getMagnitude() > limit) this->setMagnitude(limit);
 } 
