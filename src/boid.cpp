@@ -50,36 +50,36 @@ vector<Boid> Boid::getNeighbours () {
 }
 
 void Boid::align (vector<Boid> neighbours) {
-    PVector steerDirection;
+    PVector perceivedVelocity;
     
     for (Boid & boid : neighbours) {
-        steerDirection.add(boid.velocity);
+        perceivedVelocity.add(boid.velocity);
     }
     
     if (neighbours.size() > 0) {
-        steerDirection.divScalar(neighbours.size());
-        steerDirection.setMagnitude(max_speed);
-        steerDirection.sub(this->velocity);
-        steerDirection.limit(max_force);
+        perceivedVelocity.divScalar(neighbours.size());
+        perceivedVelocity.setMagnitude(max_speed);
+        perceivedVelocity.sub(this->velocity);
+        perceivedVelocity.limit(max_force);
 
-        this->acceleration.add(steerDirection);
+        this->acceleration.add(perceivedVelocity);
     }
 }
 
 void Boid::cohesion (vector<Boid> neighbours) {
-    PVector steerPosition;
+    PVector perceivedCentre;
     
     for (Boid & boid : neighbours) {
-        steerPosition.add(boid.position);
+        perceivedCentre.add(boid.position);
     }
     
     if (neighbours.size() > 0) {
-        steerPosition.divScalar(neighbours.size());
-        steerPosition.sub(this->position);
-        steerPosition.setMagnitude(max_speed);
-        steerPosition.sub(this->velocity);
-        steerPosition.limit(max_force);
+        perceivedCentre.divScalar(neighbours.size());
+        perceivedCentre.sub(this->position);
+        perceivedCentre.setMagnitude(max_speed);
+        perceivedCentre.sub(this->velocity);
+        perceivedCentre.limit(max_force);
 
-        this->acceleration.add(steerPosition);
+        this->acceleration.add(perceivedCentre);
     }
 }
