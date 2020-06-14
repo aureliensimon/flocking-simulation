@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "../include/flock.h"
+#include "../include/obstacle.h"
 
 #define WIDTH 1500
 #define HEIGHT 750
@@ -14,6 +15,7 @@ int main() {
 
     srand (time(NULL));
 
+    vector<Obstacle> obstacles;
     Flock f = Flock(10);
     f.settlement();
 
@@ -29,11 +31,15 @@ int main() {
             if (event.type == sf::Event::Closed) window.close();
         }
 
-        if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-            f.addBoid(sf::Mouse::getPosition(window));
-        }
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) f.addBoid(sf::Mouse::getPosition(window));
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) obstacles.push_back(Obstacle(sf::Mouse::getPosition(window)));
 
         window.clear();
+
+        for (Obstacle & o : obstacles) {
+            o.show(&window);
+        }
+
         f.update();
         f.show(&window);
         window.display();
