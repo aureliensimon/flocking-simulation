@@ -2,7 +2,7 @@
 
 void Flock::settlement() {
     for (int i = 0; i < numberBoids; ++i) {
-        boids.push_back(Boid(this, 1500/2, 750/2));
+        boids.push_back(Boid(this));
     }
 }
 
@@ -17,4 +17,8 @@ void Flock::show (sf::RenderWindow * window) {
         //boid.showFov(window);
         boid.show(window);
     }
+}
+
+void Flock::addBoid (sf::Vector2i position) {
+    boids.push_back(Boid(this, position.x, position.y));
 }

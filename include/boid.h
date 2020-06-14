@@ -25,8 +25,19 @@ class Flock;
 
 class Boid {
     public :
-        Boid(Flock * finit, int xinit = 0, int yinit = 0) {
+        Boid(Flock * finit) {
             position.set(rand() % WIDTH/2, rand() % HEIGHT/2);
+            velocity.set(static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/max_speed)) - max_speed/2, static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/max_speed)) - max_speed/2);
+            acceleration.set(0, 0, 0);
+
+            color.r = rand() % 255;
+            color.g = rand() % 255;
+            color.b = rand() % 255;
+
+            flock = finit;
+        }
+        Boid(Flock * finit, int xinit, int yinit) {
+            position.set(xinit, yinit);
             velocity.set(static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/max_speed)) - max_speed/2, static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/max_speed)) - max_speed/2);
             acceleration.set(0, 0, 0);
 
@@ -55,6 +66,8 @@ class Boid {
         void separation(vector<Boid>);
 
     protected:
+        Flock * flock;
+        
         PVector position;
         PVector velocity;
         PVector acceleration;
@@ -63,7 +76,6 @@ class Boid {
         int max_speed = 6;
         double max_force = 0.1;
         Rgb color;
-        Flock * flock;
 };
 
 #endif

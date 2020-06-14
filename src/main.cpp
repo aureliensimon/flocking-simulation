@@ -14,7 +14,7 @@ int main() {
 
     srand (time(NULL));
 
-    Flock f = Flock(100);
+    Flock f = Flock(10);
     f.settlement();
 
     sf::ContextSettings settings;
@@ -27,6 +27,10 @@ int main() {
         sf::Event event;
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed) window.close();
+        }
+
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+            f.addBoid(sf::Mouse::getPosition(window));
         }
 
         window.clear();
