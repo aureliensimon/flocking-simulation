@@ -1,6 +1,6 @@
 #include "../include/boid.h"
 
-void Boid::update () {
+void Boid::update (vector<Obstacle> obstacles) {
     position.add(velocity);
     velocity.add(acceleration);
     velocity.limit(max_speed);
@@ -9,8 +9,9 @@ void Boid::update () {
 
     vector<Boid> neighbours = getNeighbours();
     align(neighbours);
-    cohesion(neighbours);
     separation(neighbours);
+    avoidObstacle(obstacles);
+    cohesion(neighbours);
 }
 
 void Boid::show (sf::RenderWindow * window) {
@@ -102,4 +103,18 @@ void Boid::separation (vector<Boid> neighbours) {
     }
 
     this->acceleration.add(perceivedDistance);
+}
+
+void Boid::avoidObstacle (vector<Obstacle> obstacles) {
+    
+    for (Obstacle obstacle : obstacles) {
+        double dist = this->position.dist(obstacle.getPosition());
+        
+        if (dist < this->fov) {
+            PVector distanceDifference = PVector::diff(this->position, obstacle.getPosition());
+            distanceDifference.normalize();
+            distanceDifference.divScalar(pow(dist, 0.5));
+            this->acceleration.add(distanceDifference);
+        }
+    }
 }

@@ -18,7 +18,9 @@ class Obstacle {
            position.set(positionMouse.x - radius, positionMouse.y  - radius);
        }
        ~Obstacle() {}
-
+        
+        PVector getPosition () const { return position; }
+        
         void show(sf::RenderWindow *);
     protected :
         double radius = 10;

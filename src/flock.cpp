@@ -6,9 +6,9 @@ void Flock::settlement() {
     }
 }
 
-void Flock::update() {
+void Flock::update(vector<Obstacle> obstacles) {
     for (Boid & boid : boids) {
-        boid.update();
+        boid.update(obstacles);
     }
 }
 

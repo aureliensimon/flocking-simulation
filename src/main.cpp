@@ -5,8 +5,8 @@
 #include "../include/flock.h"
 #include "../include/obstacle.h"
 
-#define WIDTH 1500
-#define HEIGHT 750
+#define WIDTH 800
+#define HEIGHT 800
 #define SIZE 10
 
 using namespace std;
@@ -16,7 +16,7 @@ int main() {
     srand (time(NULL));
 
     vector<Obstacle> obstacles;
-    Flock f = Flock(10);
+    Flock f = Flock(0);
     f.settlement();
 
     sf::ContextSettings settings;
@@ -40,7 +40,7 @@ int main() {
             o.show(&window);
         }
 
-        f.update();
+        f.update(obstacles);
         f.show(&window);
         window.display();
     }

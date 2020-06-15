@@ -9,9 +9,10 @@
 
 #include "flock.h"
 #include "pvector.h"
+#include "obstacle.h"
 
-#define WIDTH 1500
-#define HEIGHT 750
+#define WIDTH 800
+#define HEIGHT 800
 
 using namespace std;
 
@@ -55,7 +56,7 @@ class Boid {
 
         PVector getPosition () const { return position; }
 
-        void update();
+        void update(vector<Obstacle>);
         void show(sf::RenderWindow *);
         void showFov(sf::RenderWindow *);
         void edges();
@@ -64,6 +65,7 @@ class Boid {
         void align(vector<Boid>);
         void cohesion(vector<Boid>);
         void separation(vector<Boid>);
+        void avoidObstacle(vector<Obstacle>);
 
     protected:
         Flock * flock;
@@ -74,7 +76,7 @@ class Boid {
         
         int fov = 60;
         int max_speed = 6;
-        double max_force = 0.1;
+        double max_force = 0.2;
         Rgb color;
 };
 
