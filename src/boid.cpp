@@ -15,9 +15,16 @@ void Boid::update (vector<Obstacle> obstacles) {
 }
 
 void Boid::show (sf::RenderWindow * window) {
-    sf::CircleShape body(10, 3);
-    body.setFillColor(sf::Color(getColorR(), getColorG(), getColorB(), 255));
-    body.setPosition(position.getX(), position.getY());
+    double angle = (180 - atan2(velocity.getX(), velocity.getY()) * 180 / PI) * PI / 180.0;
+
+    int smallside = 5;
+    int bigside = 3*smallside;
+    sf::VertexArray body(sf::Triangles, 3);
+
+    body[0].position = sf::Vector2f(position.getX() + (-smallside)*cos(angle) - smallside*sin(angle), position.getY() + (-smallside)*sin(angle) + smallside*cos(angle));
+    body[1].position = sf::Vector2f(position.getX() + smallside*cos(angle) - smallside*sin(angle), position.getY() + smallside*sin(angle) + smallside*cos(angle));
+    body[2].position = sf::Vector2f(position.getX() - (-bigside)*sin(angle), position.getY() + (-bigside)*cos(angle));
+    
     window->draw(body);
 }
 

@@ -11,6 +11,7 @@
 #include "pvector.h"
 #include "obstacle.h"
 
+#define PI 3.14159265
 #define WIDTH 800
 #define HEIGHT 800
 
@@ -28,7 +29,8 @@ class Boid {
     public :
         Boid(Flock * finit) {
             position.set(rand() % WIDTH/2, rand() % HEIGHT/2);
-            velocity.set(static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/max_speed)) - max_speed/2, static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/max_speed)) - max_speed/2);
+            velocity.set(0, -1, 0);
+            //velocity.set(static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/max_speed)) - max_speed/2, static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/max_speed)) - max_speed/2);
             acceleration.set(0, 0, 0);
 
             color.r = rand() % 255;

@@ -16,7 +16,7 @@ int main() {
     srand (time(NULL));
 
     vector<Obstacle> obstacles;
-    Flock f = Flock(0);
+    Flock f = Flock(1);
     f.settlement();
 
     sf::ContextSettings settings;
