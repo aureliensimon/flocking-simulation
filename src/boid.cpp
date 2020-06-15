@@ -12,6 +12,7 @@ void Boid::update (vector<Obstacle> obstacles) {
     separation(neighbours);
     avoidObstacle(obstacles);
     cohesion(neighbours);
+    //adjustColor(neighbours);
 }
 
 void Boid::show (sf::RenderWindow * window) {
@@ -25,6 +26,10 @@ void Boid::show (sf::RenderWindow * window) {
     body[1].position = sf::Vector2f(position.getX() + smallside*cos(angle) - smallside*sin(angle), position.getY() + smallside*sin(angle) + smallside*cos(angle));
     body[2].position = sf::Vector2f(position.getX() - (-bigside)*sin(angle), position.getY() + (-bigside)*cos(angle));
     
+    body[0].color = sf::Color(getColorR(), getColorG(), getColorB());
+    body[1].color = sf::Color(getColorR(), getColorG(), getColorB());
+    body[2].color = sf::Color(getColorR(), getColorG(), getColorB());
+
     window->draw(body);
 }
 
@@ -71,6 +76,8 @@ void Boid::align (vector<Boid> neighbours) {
         perceivedVelocity.sub(this->velocity);
         perceivedVelocity.limit(max_force);
     }
+    
+    perceivedVelocity.mulScalar(align_force);
 
     this->acceleration.add(perceivedVelocity);
 }
@@ -89,6 +96,8 @@ void Boid::cohesion (vector<Boid> neighbours) {
         perceivedCentre.sub(this->velocity);
         perceivedCentre.limit(max_force);
     }
+    
+    perceivedCentre.mulScalar(cohesion_force);
 
     this->acceleration.add(perceivedCentre);
 }
@@ -109,6 +118,8 @@ void Boid::separation (vector<Boid> neighbours) {
         perceivedDistance.limit(max_force);
     }
 
+    perceivedDistance.mulScalar(separation_force);
+
     this->acceleration.add(perceivedDistance);
 }
 
@@ -124,4 +135,57 @@ void Boid::avoidObstacle (vector<Obstacle> obstacles) {
             this->acceleration.add(distanceDifference);
         }
     }
+}
+
+void Boid::adjustColor (vector<Boid> neighbours) {
+    Rgb newColor = getAverageColor(neighbours);
+
+    this->color.r += newColor.r * 0.03;
+    this->color.r = (this->color.r + 255) % 255;
+
+    this->color.g += newColor.g * 0.03;
+    this->color.g = (this->color.g + 255) % 255;
+    
+    this->color.b += newColor.b * 0.03;
+    this->color.b = (this->color.b + 255) % 255;
+
+    cout << newColor.r << ':' << newColor.g << ':' << newColor.b << endl;
+} 
+
+Rgb Boid::getAverageColor (vector<Boid> neighbours) {
+    Rgb averageColor;
+
+    for (Boid & boid : neighbours) {
+        if (boid.getColorR() - this->getColorR() < -128) {
+            averageColor.r += boid.getColorR() + 255 - this->getColorR();
+        } else if (boid.getColorR() - this->getColorR() > 128) {
+            averageColor.r += boid.getColorR() - 255 - this->getColorR();
+        } else {
+            averageColor.r += boid.getColorR() - this->getColorR();
+        }
+
+        if (boid.getColorG() - this->getColorG() < -128) {
+            averageColor.g += boid.getColorG() + 255 - this->getColorG();
+        } else if (boid.getColorG() - this->getColorG() > 128) {
+            averageColor.g += boid.getColorG() - 255 - this->getColorG();
+        } else {
+            averageColor.g += boid.getColorG() - this->getColorG();
+        }
+
+        if (boid.getColorB() - this->getColorB() < -128) {
+            averageColor.b += boid.getColorB() + 255 - this->getColorB();
+        } else if (boid.getColorB() - this->getColorB() > 128) {
+            averageColor.b += boid.getColorB() - 255 - this->getColorB();
+        } else {
+            averageColor.b += boid.getColorB() - this->getColorB();
+        }
+    }
+
+    if (neighbours.size() > 0) {
+        averageColor.r /= neighbours.size();
+        averageColor.g /= neighbours.size();
+        averageColor.b /= neighbours.size();
+    }
+
+    return averageColor;
 }

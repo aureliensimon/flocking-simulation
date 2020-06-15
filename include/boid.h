@@ -18,9 +18,9 @@
 using namespace std;
 
 typedef struct {
-    int r;
-    int g;
-    int b;
+    int r = 0;
+    int g = 0;
+    int b = 0;
 } Rgb;
 
 class Flock;
@@ -63,6 +63,8 @@ class Boid {
         void showFov(sf::RenderWindow *);
         void edges();
         vector<Boid> getNeighbours();
+        void adjustColor(vector<Boid>);
+        Rgb getAverageColor(vector<Boid>);
 
         void align(vector<Boid>);
         void cohesion(vector<Boid>);
@@ -79,6 +81,10 @@ class Boid {
         int fov = 60;
         int max_speed = 6;
         double max_force = 0.2;
+
+        double separation_force = 1;
+        double cohesion_force = 1;
+        double align_force = 1;
         Rgb color;
 };
 
