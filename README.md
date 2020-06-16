@@ -5,22 +5,39 @@ In 1986, Craig Reynolds made a computer model of coordinated animal motion such 
 ## Rules
 The basic flocking model consists of three simple steering behaviors which describe how an individual boid maneuvers based on the positions and velocities its nearby flockmates.
 
-**Separation**
+| |  | |
+| ------------- | ------------- | ------------- |
+| **Separation**  | ![Content Cell](img/separation.png)  | steer to avoid crowding local flockmates
+| **Alignment** | ![Content Cell](img/alignment.png)  | steer towards the average heading of local flockmates
+| **Cohesion** | ![Content Cell](img/cohesion.png)  | steer to move toward the average position of local flockmates
 
-<img align="left" width="500" height="500" src="img/separation.png">
-<br><br><br>
-steer to avoid crowding local flockmates
 
-**Alignment**
+## Boid vision
 
-<img align="left" width="500" height="500" src="img/alignment.png">
-<br><br><br>
-steer towards the average heading of local flockmates 
+Dark red : Repulsion zone
 
-**Cohesion**
+Light red : attraction zone
 
-<img align="left" width="500" height="500" src="img/cohesion.png">
-<br><br><br>
-steer to move toward the average position of local flockmates
+<img src="img/boid_vision.png" width="150">
 
+## Simulation settings
+
+| Parameter | Explanation |  Recommended Value|
+| ------------- | ------------- | ------------- |
+| fov | how far the boid can see (radius) | 80
+| repulsion_fov | how far the boid sees obsacles | 40 |
+| max_speed | how fast a boid can go | 6 |
+| max_force | maximum force a boid can support | 0.2|
+| separation_force | importance of the separation rule | 1 |
+| cohesion_force | importance of the cohesion rule | 1 |
+| align_force | importance of the alignment rule | 1 |
+| repulsion_force | how strong a boid will try to avoid an obstacle | 5 |
+
+
+## Sources
+[Boids, from Craig Reynolds](http://www.red3d.com/cwr/boids/)
+
+[Wikipedia Boid article](https://en.wikipedia.org/wiki/Boids)
+
+[Boids Pseudocode](http://www.kfish.org/boids/pseudocode.html)
 
