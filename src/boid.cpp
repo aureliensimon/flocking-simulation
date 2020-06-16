@@ -10,8 +10,8 @@ void Boid::update (vector<Obstacle> obstacles) {
     vector<Boid> neighbours = getNeighbours();
     align(neighbours);
     separation(neighbours);
-    avoidObstacle(obstacles);
     cohesion(neighbours);
+    avoidObstacle(obstacles);
     //adjustColor(neighbours);
 }
 
@@ -124,17 +124,31 @@ void Boid::separation (vector<Boid> neighbours) {
 }
 
 void Boid::avoidObstacle (vector<Obstacle> obstacles) {
+
+    PVector perceivedDistance;
+    int numberObstacles = 0;
     
     for (Obstacle obstacle : obstacles) {
         double dist = this->position.dist(obstacle.getPosition());
         
-        if (dist < this->fov) {
+        if (dist < this->repulsion_fov) {
             PVector distanceDifference = PVector::diff(this->position, obstacle.getPosition());
-            distanceDifference.normalize();
-            distanceDifference.divScalar(pow(dist, 0.5));
-            this->acceleration.add(distanceDifference);
+            distanceDifference.divScalar(pow(this->position.dist(obstacle.getPosition()), 2));
+            perceivedDistance.add(distanceDifference);
+            numberObstacles++;
         }
     }
+
+    if (numberObstacles > 0) {
+        perceivedDistance.divScalar(numberObstacles);
+        perceivedDistance.setMagnitude(max_speed);
+        perceivedDistance.sub(this->velocity);
+        perceivedDistance.limit(max_force);
+    }
+
+    perceivedDistance.mulScalar(repulsion_force);
+
+    this->acceleration.add(perceivedDistance);
 }
 
 void Boid::adjustColor (vector<Boid> neighbours) {

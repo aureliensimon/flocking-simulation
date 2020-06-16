@@ -5,8 +5,8 @@
 #include "../include/flock.h"
 #include "../include/obstacle.h"
 
-#define WIDTH 800
-#define HEIGHT 800
+#define WIDTH 2000
+#define HEIGHT 700
 #define SIZE 10
 
 using namespace std;

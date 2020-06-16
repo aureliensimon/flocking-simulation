@@ -12,8 +12,8 @@
 #include "obstacle.h"
 
 #define PI 3.14159265
-#define WIDTH 800
-#define HEIGHT 800
+#define WIDTH 2000
+#define HEIGHT 700
 
 using namespace std;
 
@@ -78,13 +78,15 @@ class Boid {
         PVector velocity;
         PVector acceleration;
         
-        int fov = 60;
+        int fov = 80;
+        int repulsion_fov = 40;
         int max_speed = 6;
         double max_force = 0.2;
 
         double separation_force = 1;
         double cohesion_force = 1;
         double align_force = 1;
+        double repulsion_force = 5;
         Rgb color;
 };
 
