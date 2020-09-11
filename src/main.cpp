@@ -5,8 +5,8 @@
 #include "../include/flock.h"
 #include "../include/obstacle.h"
 
-#define WIDTH 2000
-#define HEIGHT 700
+#define WIDTH 800
+#define HEIGHT 600
 #define SIZE 10
 
 using namespace std;
@@ -16,7 +16,7 @@ int main() {
     srand (time(NULL));
 
     vector<Obstacle> obstacles;
-    Flock f = Flock(0);
+    Flock f = Flock(50);
     f.settlement();
 
     sf::ContextSettings settings;
@@ -31,7 +31,7 @@ int main() {
             if (event.type == sf::Event::Closed) window.close();
         }
 
-        if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) f.addBoid(sf::Mouse::getPosition(window));
+        //if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) f.addBoid(sf::Mouse::getPosition(window));
         if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) obstacles.push_back(Obstacle(sf::Mouse::getPosition(window)));
 
         window.clear();

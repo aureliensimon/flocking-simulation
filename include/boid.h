@@ -12,8 +12,8 @@
 #include "obstacle.h"
 
 #define PI 3.14159265
-#define WIDTH 2000
-#define HEIGHT 700
+#define WIDTH 800
+#define HEIGHT 600
 
 using namespace std;
 
@@ -29,8 +29,7 @@ class Boid {
     public :
         Boid(Flock * finit) {
             position.set(rand() % WIDTH/2, rand() % HEIGHT/2);
-            velocity.set(0, -1, 0);
-            //velocity.set(static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/max_speed)) - max_speed/2, static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/max_speed)) - max_speed/2);
+            velocity.set(static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/max_speed)) - max_speed/2, static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/max_speed)) - max_speed/2);
             acceleration.set(0, 0, 0);
 
             color.r = rand() % 255;
@@ -63,10 +62,8 @@ class Boid {
         void showFov(sf::RenderWindow *);
         void edges();
         vector<Boid> getNeighbours();
-        void adjustColor(vector<Boid>);
-        Rgb getAverageColor(vector<Boid>);
 
-        void align(vector<Boid>);
+	void align(vector<Boid>);
         void cohesion(vector<Boid>);
         void separation(vector<Boid>);
         void avoidObstacle(vector<Obstacle>);
@@ -86,7 +83,7 @@ class Boid {
         double separation_force = 1;
         double cohesion_force = 1;
         double align_force = 1;
-        double repulsion_force = 5;
+        double repulsion_force = 4;
         Rgb color;
 };
 

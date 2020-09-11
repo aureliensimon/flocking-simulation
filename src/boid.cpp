@@ -12,7 +12,6 @@ void Boid::update (vector<Obstacle> obstacles) {
     separation(neighbours);
     cohesion(neighbours);
     avoidObstacle(obstacles);
-    //adjustColor(neighbours);
 }
 
 void Boid::show (sf::RenderWindow * window) {
@@ -151,55 +150,3 @@ void Boid::avoidObstacle (vector<Obstacle> obstacles) {
     this->acceleration.add(perceivedDistance);
 }
 
-void Boid::adjustColor (vector<Boid> neighbours) {
-    Rgb newColor = getAverageColor(neighbours);
-
-    this->color.r += newColor.r * 0.03;
-    this->color.r = (this->color.r + 255) % 255;
-
-    this->color.g += newColor.g * 0.03;
-    this->color.g = (this->color.g + 255) % 255;
-    
-    this->color.b += newColor.b * 0.03;
-    this->color.b = (this->color.b + 255) % 255;
-
-    cout << newColor.r << ':' << newColor.g << ':' << newColor.b << endl;
-} 
-
-Rgb Boid::getAverageColor (vector<Boid> neighbours) {
-    Rgb averageColor;
-
-    for (Boid & boid : neighbours) {
-        if (boid.getColorR() - this->getColorR() < -128) {
-            averageColor.r += boid.getColorR() + 255 - this->getColorR();
-        } else if (boid.getColorR() - this->getColorR() > 128) {
-            averageColor.r += boid.getColorR() - 255 - this->getColorR();
-        } else {
-            averageColor.r += boid.getColorR() - this->getColorR();
-        }
-
-        if (boid.getColorG() - this->getColorG() < -128) {
-            averageColor.g += boid.getColorG() + 255 - this->getColorG();
-        } else if (boid.getColorG() - this->getColorG() > 128) {
-            averageColor.g += boid.getColorG() - 255 - this->getColorG();
-        } else {
-            averageColor.g += boid.getColorG() - this->getColorG();
-        }
-
-        if (boid.getColorB() - this->getColorB() < -128) {
-            averageColor.b += boid.getColorB() + 255 - this->getColorB();
-        } else if (boid.getColorB() - this->getColorB() > 128) {
-            averageColor.b += boid.getColorB() - 255 - this->getColorB();
-        } else {
-            averageColor.b += boid.getColorB() - this->getColorB();
-        }
-    }
-
-    if (neighbours.size() > 0) {
-        averageColor.r /= neighbours.size();
-        averageColor.g /= neighbours.size();
-        averageColor.b /= neighbours.size();
-    }
-
-    return averageColor;
-}
